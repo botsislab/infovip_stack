@@ -6,7 +6,6 @@ It also discusses how to get up and running locally by using Docker.
 ## First Time Setup
 
 - Clone all the needed git repositories from the GitLab instance on the server.
-```
 
 - Install Docker. For Windows or MacOS, we recommend [Docker Desktop](https://www.docker.com/products/docker-desktop)
 
