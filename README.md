@@ -5,15 +5,7 @@ It also discusses how to get up and running locally by using Docker.
 
 ## First Time Setup
 
-- Clone all the needed git repositories from the GitLab instance on the server. Note that GitLab is available on port 8080.
-
-```
-git clone http://mrponc01.hosts.jhmi.edu:8080/infovip/infovip/auth_server
-git clone http://mrponc01.hosts.jhmi.edu:8080/infovip/infovip/infovip_database
-git clone http://mrponc01.hosts.jhmi.edu:8080/infovip/infovip/infovip_ether
-git clone http://mrponc01.hosts.jhmi.edu:8080/infovip/infovip/infovip_service
-git clone http://mrponc01.hosts.jhmi.edu:8080/infovip/infovip/infovip_stack
-git clone http://mrponc01.hosts.jhmi.edu:8080/infovip/infovip/infovip_workbench
+- Clone all the needed git repositories from the GitLab instance on the server.
 ```
 
 - Install Docker. For Windows or MacOS, we recommend [Docker Desktop](https://www.docker.com/products/docker-desktop)
