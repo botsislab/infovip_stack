@@ -1,0 +1,90 @@
+version: '3'
+
+services:
+  infovip-workbench:
+    image: infovip-workbench
+    ports:
+      - "81:80"
+    depends_on:
+      - infovip-service
+    networks:
+      - public
+  infovip-service:
+    image: infovip-service
+    environment:
+      DATABASE_HOST: infovip-database
+      DATABASE_PASS: password
+      AUTH_PROTOCOL_HOST_PORT: http://auth-server-service
+      ETHER_PROTOCOL_HOST_PORT: http://infovip-ether
+    depends_on:
+      - infovip-database
+    networks:
+      - public
+  infovip-database:
+    image: infovip-database
+    volumes:
+       - db-data:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+    ports:
+      - "3306:3306" # So we can use database tools
+    networks:
+      - public
+  infovip-ether:
+    image: infovip-ether
+    environment:
+      DATABASE_HOST: infovip-database
+      DATABASE_PASS: password
+    ports:
+      - "5005:80"
+    depends_on:
+      - infovip-database
+    networks:
+      - public
+    deploy:
+      resources:
+        limits:
+          cpus: '3'
+          memory: 10g
+  infovip-drugsatfda:
+    image: infovip-drugsatfda
+    environment:
+      DATABASE_HOST: infovip-database
+      DATABASE_PASS: password
+    depends_on:
+      - infovip-database
+    networks:
+      - public
+  infovip-dailymed:
+    image: infovip-dailymed
+    environment:
+      DATABASE_HOST: infovip-database
+      DATABASE_PASS: password
+      DATABASE_SCHEMA_NAME: infovip
+    volumes:
+      - dailymed-data:/usr/src/dailymed-data
+    depends_on:
+      - infovip-database
+    networks:
+      - public
+  infovip-classification:
+    image: infovip-classification
+    environment:
+      DATABASE_HOST: infovip-database
+      DATABASE_PASS: password
+    ports:
+      - "5006:80"
+    depends_on:
+      - infovip-database
+    networks:
+      - public
+
+volumes:
+    db-data:
+    dailymed-data:
+
+# Prerequisite: docker network create -d overlay --attachable public
+networks:
+  public:
+    external:
+      name: public
